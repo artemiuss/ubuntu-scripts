@@ -8,9 +8,13 @@ DISK_USAGE_BEFORE_CLEANUP=$(df -h)
 #Cleaning up tmp
 sudo rm -rf /tmp/*
 
+journalctl --vacuum-time=1d
+
 #Delete all .gz and rotated file
 sudo find /var/log -type f -regex ".*\.gz$" | xargs sudo rm -Rf
 sudo find /var/log -type f -regex ".*\.[0-9]$" | xargs sudo rm -Rf
+
+sudo find /var/log -type f -regex ".*log$" | xargs sudo rm -Rf
 
 #Clean clears out the local repository of retrieved package files. 
 #It removes  everything but the lock file from /var/cache/apt/archives/ and /var/cache/apt/archives/partial/.
